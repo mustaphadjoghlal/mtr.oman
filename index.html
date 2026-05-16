@@ -168,6 +168,31 @@
   }
   .hero-grid{display:grid; grid-template-columns: 1.2fr .8fr; gap:60px; align-items:center;}
   @media (max-width:900px){.hero-grid{grid-template-columns:1fr;}}
+  /* Hero logo badge */
+  .hero-logo{
+    display:inline-flex; align-items:center; gap:18px;
+    margin-bottom:28px;
+  }
+  .hero-logo img{
+    height:90px; width:90px;
+    filter: drop-shadow(0 0 24px rgba(59,140,255,.7)) drop-shadow(0 0 8px rgba(59,140,255,.5));
+    animation: float 6s ease-in-out infinite;
+  }
+  .hero-logo-text{
+    display:flex; flex-direction:column; gap:2px;
+  }
+  .hero-logo-text .mono{
+    font-family:var(--font-mono); font-size:13px; color:var(--blue-bright); letter-spacing:.22em;
+  }
+  .hero-logo-text .full{
+    font-family:var(--font-ar); font-size:16px; font-weight:600; color:var(--ink); opacity:.85;
+    letter-spacing:0;
+  }
+  @media (max-width:768px){
+    .hero-logo img{ height:68px; width:68px; }
+    .hero-logo-text .full{ font-size:13.5px; }
+  }
+
   .hero h1{
     font-size: clamp(44px, 6.4vw, 84px); font-weight:600; margin: 22px 0 24px;
     background: linear-gradient(180deg, #ffffff 30%, #8aa8e0 100%);
@@ -723,13 +748,21 @@
   <section class="hero">
     <div class="hero-grid">
       <div>
+        <div class="hero-logo reveal">
+          <img src="assets/mtr-logo.png" alt="MTR" />
+          <div class="hero-logo-text">
+            <span class="mono">MTR</span>
+            <span class="full" data-ar>مجان للثورة التقنية</span>
+            <span class="full" data-en>Majan for Technical Revolution</span>
+          </div>
+        </div>
         <span class="eyebrow reveal">
           <span data-en>Technology · Innovation · Trust</span>
           <span data-ar>التقنية · الابتكار · الثقة</span>
         </span>
         <h1 class="reveal d1">
           <span data-en>Smart technology<br/>for a <span class="accent">scalable future.</span></span>
-          <span data-ar>تقنية ذكية<br/>لمستقبل <span class="accent">قابل للتوسّع.</span></span>
+          <span data-ar>تقنية ذكية لمستقبل<br/><span class="accent">قــــابل للتـــوسّــــع.</span></span>
         </h1>
         <p class="lede reveal d2">
           <span data-en>MTR partners with organizations to deliver cloud, networking, and smart-management solutions engineered for performance, security, and growth.</span>
