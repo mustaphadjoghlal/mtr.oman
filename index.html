@@ -477,6 +477,137 @@
     content:""; height:1px; flex:1; max-width:120px;
     background: linear-gradient(90deg, transparent, var(--line-2), transparent);
   }
+
+  /* ============= MOBILE HAMBURGER BUTTON ============= */
+  .mob-btn{
+    display:none; align-items:center; justify-content:center;
+    width:42px; height:42px; flex-shrink:0;
+    background:var(--surface); border:1px solid var(--line);
+    border-radius:10px; cursor:pointer; color:var(--ink);
+    transition: border-color .2s, background .2s;
+  }
+  .mob-btn:hover{ border-color:var(--blue); background:rgba(59,140,255,.08); }
+
+  /* ============= MOBILE MENU DRAWER ============= */
+  .mob-menu{
+    position:fixed; inset:0; z-index:49;
+    background:rgba(6,9,15,.97);
+    backdrop-filter:blur(24px) saturate(1.3);
+    display:flex; flex-direction:column;
+    transform:translateX(110%);
+    transition:transform .35s cubic-bezier(.4,0,.2,1);
+    overflow-y:auto;
+  }
+  html[dir="rtl"] .mob-menu{ transform:translateX(-110%); }
+  .mob-menu.open{ transform:translateX(0) !important; }
+
+  .mob-menu-head{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 20px;
+    border-bottom:1px solid var(--line);
+    position:sticky; top:0; z-index:2;
+    background:rgba(6,9,15,.95);
+    backdrop-filter:blur(14px);
+  }
+  .mob-close{
+    width:40px; height:40px; border-radius:50%;
+    background:var(--surface); border:1px solid var(--line);
+    display:grid; place-items:center; cursor:pointer; color:var(--ink);
+    transition: border-color .2s, color .2s;
+  }
+  .mob-close:hover{ border-color:var(--blue); color:var(--blue-bright); }
+
+  .mob-nav{
+    flex:1; padding:12px 20px 24px;
+    display:flex; flex-direction:column;
+  }
+  .mob-nav a{
+    display:flex; align-items:center; justify-content:space-between;
+    font-size:19px; font-weight:500;
+    color:var(--ink); text-decoration:none;
+    padding:16px 0;
+    border-bottom:1px solid var(--line);
+    font-family:var(--font-en-head);
+    transition:color .2s, padding-inline-start .2s;
+  }
+  html[data-lang="ar"] .mob-nav a{ font-family:var(--font-ar); }
+  .mob-nav a:hover{ color:var(--blue-bright); padding-inline-start:6px; }
+  .mob-nav a svg{ opacity:.4; }
+  .mob-nav a:hover svg{ opacity:1; color:var(--blue-bright); }
+
+  .mob-footer{
+    padding:20px; border-top:1px solid var(--line);
+    display:flex; flex-direction:column; gap:12px;
+  }
+  .mob-footer .btn{ width:100%; justify-content:center; font-size:15px; padding:14px 20px; }
+  .mob-footer .lang-toggle{ align-self:center; }
+
+  /* ============= MOBILE RESPONSIVE ============= */
+  @media (max-width:768px){
+    .mob-btn{ display:flex; }
+    nav.links{ display:none; }
+    .nav-actions .btn{ display:none; }
+    .nav-actions .lang-toggle{ display:none; }
+    .nav{ padding:12px 18px; gap:12px; }
+
+    main{ padding:0 16px; }
+    section{ padding:64px 0; }
+    .hero{ padding:48px 0 64px; }
+    .hero p.lede{ font-size:15px; }
+    .hero-ctas{ flex-direction:column; }
+    .hero-ctas .btn{ justify-content:center; }
+    h2{ font-size:clamp(24px,7vw,40px); }
+    .lede{ font-size:15px; }
+
+    .services-grid{ margin-top:32px; }
+    .why-list{ margin-top:32px; }
+    .values-grid{ margin-top:32px; }
+    .process-rail{ margin-top:40px; }
+    .industries-grid{ margin-top:32px; }
+    .mv-grid{ margin-top:32px; }
+    .contact-grid{ margin-top:32px; gap:40px; }
+
+    .mv-card{ padding:26px 22px; }
+    .mv-card h3{ font-size:22px; }
+    .mv-card p{ font-size:14px; }
+
+    .hero-meta{ margin-top:48px; }
+    .hero-meta .cell{ padding:18px 16px; }
+    .hero-meta .v{ font-size:22px; }
+
+    form.contact{ padding:22px 18px; }
+
+    .foot{ flex-direction:column; align-items:flex-start; gap:20px; }
+
+    /* Process steps — horizontal layout on mobile */
+    .step{ padding:0 12px; }
+    .process-rail .step{
+      padding:0 0 28px;
+      text-align:start;
+      display:flex; gap:18px; align-items:flex-start;
+    }
+    .process-rail .step .node{ flex-shrink:0; margin:0; width:56px; height:56px; }
+    .process-rail .step .node .n{ font-size:18px; }
+    .process-rail .step h3{ margin:4px 0 6px; font-size:15px; }
+    .process-rail .step p{ font-size:13px; }
+
+    .why-item .num-big{ font-size:32px; min-width:46px; }
+
+    .sigil{ margin:0 -4px; font-size:10px; }
+  }
+
+  @media (max-width:480px){
+    .orb{ max-width:240px; margin:32px auto 0; }
+    .brand-text .name{ font-size:13px; }
+    .hero-meta{ grid-template-columns:repeat(2,1fr); }
+    .industries-grid{ grid-template-columns:repeat(2,1fr); }
+    .values-grid{ grid-template-columns:1fr; }
+    .row2{ grid-template-columns:1fr; }
+    .service{ padding:22px 18px; }
+    .why-item{ padding:20px 16px; }
+    .about-points{ gap:10px; }
+    .about-point{ padding:12px 14px; }
+  }
 </style>
 </head>
 <body>
@@ -525,8 +656,65 @@
         <svg class="arr" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
       </a>
     </div>
+    <button class="mob-btn" id="mob-btn" aria-label="Open menu" aria-expanded="false">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
   </div>
 </header>
+
+<!-- Mobile menu -->
+<div class="mob-menu" id="mob-menu" aria-hidden="true">
+  <div class="mob-menu-head">
+    <a class="brand" href="#top" onclick="closeMobMenu()">
+      <img src="assets/mtr-logo.png" alt="MTR" />
+      <div class="brand-text">
+        <span class="mono">MTR</span>
+        <span class="name" data-en>Majan for Technical Revolution</span>
+        <span class="name" data-ar>مجان للثورة التقنية</span>
+      </div>
+    </a>
+    <button class="mob-close" id="mob-close" aria-label="Close menu">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <nav class="mob-nav">
+    <a href="#about" onclick="closeMobMenu()">
+      <span><span data-en>About</span><span data-ar>من نحن</span></span>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+    </a>
+    <a href="#services" onclick="closeMobMenu()">
+      <span><span data-en>Services</span><span data-ar>الخدمات</span></span>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+    </a>
+    <a href="#why" onclick="closeMobMenu()">
+      <span><span data-en>Why MTR</span><span data-ar>لماذا نحن</span></span>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+    </a>
+    <a href="#process" onclick="closeMobMenu()">
+      <span><span data-en>Process</span><span data-ar>آلية العمل</span></span>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+    </a>
+    <a href="#industries" onclick="closeMobMenu()">
+      <span><span data-en>Industries</span><span data-ar>القطاعات</span></span>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+    </a>
+    <a href="#contact" onclick="closeMobMenu()">
+      <span><span data-en>Contact</span><span data-ar>تواصل</span></span>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+    </a>
+  </nav>
+  <div class="mob-footer">
+    <div class="lang-toggle" role="group" aria-label="Language">
+      <button data-lang-btn="en" class="active">EN</button>
+      <button data-lang-btn="ar">ع</button>
+    </div>
+    <a href="#contact" class="btn primary" onclick="closeMobMenu()">
+      <span data-en>Get a free quote</span>
+      <span data-ar>اطلب عرض سعر مجاناً</span>
+      <svg class="arr" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+</div>
 
 <a id="top"></a>
 <main>
@@ -1089,6 +1277,27 @@
     const saved = localStorage.getItem('mtr-lang');
     if(saved) setLang(saved);
   }catch(_){}
+
+  // ---- Mobile menu ----
+  const mobBtn = document.getElementById('mob-btn');
+  const mobMenu = document.getElementById('mob-menu');
+  const mobClose = document.getElementById('mob-close');
+
+  function openMobMenu(){
+    mobMenu.classList.add('open');
+    mobMenu.setAttribute('aria-hidden', 'false');
+    mobBtn.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeMobMenu(){
+    mobMenu.classList.remove('open');
+    mobMenu.setAttribute('aria-hidden', 'true');
+    mobBtn.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  }
+  mobBtn.addEventListener('click', openMobMenu);
+  mobClose.addEventListener('click', closeMobMenu);
+  mobMenu.addEventListener('click', (e) => { if(e.target === mobMenu) closeMobMenu(); });
 
   // ---- Scroll reveal ----
   const io = new IntersectionObserver((entries) => {
