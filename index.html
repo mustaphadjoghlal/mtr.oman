@@ -1,0 +1,1114 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>MTR — Majan for Technical Revolution</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:        #06090f;
+    --bg-2:      #0a1020;
+    --surface:   #0d1426;
+    --surface-2: #111a30;
+    --line:      #1a2440;
+    --line-2:    #243056;
+    --ink:       #eaf1ff;
+    --muted:     #8893b0;
+    --muted-2:   #5a6788;
+    --blue:      #3b8cff;
+    --blue-bright:#5aa6ff;
+    --blue-deep: #1d5bd6;
+    --cyan:      #59d8ff;
+    --glow:      0 0 30px rgba(59,140,255,.35), 0 0 80px rgba(59,140,255,.15);
+    --glow-soft: 0 0 20px rgba(59,140,255,.18);
+    --radius:    14px;
+    --radius-lg: 22px;
+
+    --font-en-head: "Space Grotesk", system-ui, sans-serif;
+    --font-en-body: "Inter", system-ui, sans-serif;
+    --font-ar:      "IBM Plex Sans Arabic", "Segoe UI", system-ui, sans-serif;
+    --font-mono:    "JetBrains Mono", ui-monospace, monospace;
+
+    --maxw: 1240px;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:var(--font-en-body);
+    font-feature-settings:"ss01","cv11";
+    line-height:1.55;
+    overflow-x:hidden;
+    min-height:100vh;
+  }
+  html[data-lang="ar"] body{font-family:var(--font-ar);}
+  html[data-lang="ar"] [data-en]{display:none;}
+  html[data-lang="en"] [data-ar]{display:none;}
+
+  /* Backdrop grid + soft gradient orbs */
+  .backdrop{
+    position:fixed; inset:0; z-index:-1; pointer-events:none;
+    background:
+      radial-gradient(900px 600px at 12% -10%, rgba(59,140,255,.15), transparent 60%),
+      radial-gradient(900px 700px at 90% 10%, rgba(89,216,255,.08), transparent 65%),
+      radial-gradient(700px 700px at 50% 110%, rgba(29,91,214,.12), transparent 60%);
+  }
+  .backdrop::before{
+    content:""; position:absolute; inset:0;
+    background-image:
+      linear-gradient(rgba(59,140,255,.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(59,140,255,.05) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(ellipse at 50% 30%, #000 30%, transparent 75%);
+  }
+  .backdrop::after{
+    content:""; position:absolute; inset:0;
+    background: radial-gradient(2px 2px at 20% 30%, rgba(255,255,255,.4), transparent 60%),
+                radial-gradient(1px 1px at 70% 60%, rgba(255,255,255,.4), transparent 60%),
+                radial-gradient(1.5px 1.5px at 40% 80%, rgba(89,216,255,.5), transparent 60%),
+                radial-gradient(1px 1px at 80% 20%, rgba(255,255,255,.3), transparent 60%),
+                radial-gradient(1px 1px at 10% 70%, rgba(59,140,255,.6), transparent 60%);
+    opacity:.55;
+  }
+
+  /* ============= HEADER ============= */
+  header.site{
+    position:sticky; top:0; z-index:50;
+    backdrop-filter: blur(14px) saturate(1.2);
+    background: linear-gradient(to bottom, rgba(6,9,15,.85), rgba(6,9,15,.55));
+    border-bottom:1px solid rgba(26,36,64,.6);
+  }
+  .nav{
+    max-width:var(--maxw); margin:0 auto; padding:14px 28px;
+    display:flex; align-items:center; gap:24px;
+  }
+  .brand{
+    display:flex; align-items:center; gap:12px; text-decoration:none; color:var(--ink);
+  }
+  .brand img{height:38px; width:38px; filter:drop-shadow(0 0 10px rgba(59,140,255,.5));}
+  .brand-text{display:flex; flex-direction:column; line-height:1.1;}
+  .brand-text .mono{font-family:var(--font-mono); font-size:11px; color:var(--blue-bright); letter-spacing:.18em;}
+  .brand-text .name{font-family:var(--font-en-head); font-weight:600; font-size:15px;}
+  html[data-lang="ar"] .brand-text .name{font-family:var(--font-ar);}
+
+  nav.links{display:flex; gap:6px; margin-inline-start:auto; flex-wrap:wrap;}
+  nav.links a{
+    font-size:13.5px; color:var(--muted); text-decoration:none; padding:8px 14px; border-radius:99px;
+    transition: color .2s, background .2s;
+  }
+  nav.links a:hover{color:var(--ink); background:rgba(59,140,255,.08);}
+
+  .nav-actions{display:flex; gap:10px; align-items:center;}
+  .lang-toggle{
+    display:flex; background:var(--surface); border:1px solid var(--line); border-radius:99px; padding:3px;
+    font-family:var(--font-mono); font-size:11px; letter-spacing:.1em;
+  }
+  .lang-toggle button{
+    border:0; background:transparent; color:var(--muted); padding:6px 12px; border-radius:99px; cursor:pointer;
+    font-family:inherit; font-size:inherit; letter-spacing:inherit;
+    transition: all .2s;
+  }
+  .lang-toggle button.active{background:var(--blue); color:#fff; box-shadow:var(--glow-soft);}
+
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:11px 20px; border-radius:99px; text-decoration:none;
+    font-family:var(--font-en-head); font-size:13.5px; font-weight:500;
+    border:1px solid var(--line-2); color:var(--ink); background:var(--surface);
+    transition: all .2s; cursor:pointer;
+  }
+  html[data-lang="ar"] .btn{font-family:var(--font-ar);}
+  .btn:hover{border-color:var(--blue); background:rgba(59,140,255,.08); box-shadow:var(--glow-soft);}
+  .btn.primary{
+    background: linear-gradient(135deg, var(--blue) 0%, var(--blue-deep) 100%);
+    border-color: var(--blue);
+    color:#fff;
+    box-shadow: var(--glow-soft);
+  }
+  .btn.primary:hover{box-shadow: var(--glow); transform: translateY(-1px);}
+  .btn .arr{transition: transform .2s;}
+  html[dir="ltr"] .btn:hover .arr{transform: translateX(3px);}
+  html[dir="rtl"] .btn:hover .arr{transform: translateX(-3px) scaleX(-1);}
+  html[dir="rtl"] .btn .arr{transform: scaleX(-1);}
+
+  /* ============= LAYOUT ============= */
+  main{max-width:var(--maxw); margin:0 auto; padding:0 28px;}
+  section{padding:120px 0; position:relative;}
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:10px;
+    font-family:var(--font-mono); font-size:11.5px; letter-spacing:.2em;
+    color:var(--blue-bright); text-transform:uppercase;
+    padding:6px 14px; border:1px solid rgba(59,140,255,.3); border-radius:99px;
+    background: rgba(59,140,255,.06);
+  }
+  .eyebrow::before{
+    content:""; width:6px; height:6px; border-radius:50%; background:var(--blue-bright);
+    box-shadow:0 0 8px var(--blue-bright);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse{
+    0%,100%{opacity:1; transform:scale(1);}
+    50%{opacity:.4; transform:scale(.7);}
+  }
+  h1,h2,h3{font-family:var(--font-en-head); letter-spacing:-.02em; line-height:1.1;}
+  html[data-lang="ar"] h1, html[data-lang="ar"] h2, html[data-lang="ar"] h3{
+    font-family:var(--font-ar); letter-spacing:0; line-height:1.25;
+  }
+  h2{font-size: clamp(32px, 4vw, 52px); margin: 18px 0 16px; font-weight:600;}
+  .lede{color:var(--muted); font-size:17px; max-width:680px;}
+
+  /* ============= HERO ============= */
+  .hero{
+    padding: 90px 0 120px;
+    position:relative;
+  }
+  .hero-grid{display:grid; grid-template-columns: 1.2fr .8fr; gap:60px; align-items:center;}
+  @media (max-width:900px){.hero-grid{grid-template-columns:1fr;}}
+  .hero h1{
+    font-size: clamp(44px, 6.4vw, 84px); font-weight:600; margin: 22px 0 24px;
+    background: linear-gradient(180deg, #ffffff 30%, #8aa8e0 100%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .hero h1 .accent{
+    background: linear-gradient(135deg, var(--cyan) 0%, var(--blue) 60%, var(--blue-deep) 100%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    display:inline-block;
+  }
+  .hero p.lede{font-size:19px; max-width:560px; margin-bottom:36px;}
+  .hero-ctas{display:flex; gap:14px; flex-wrap:wrap;}
+
+  /* Hero visual orb */
+  .orb{
+    position:relative; aspect-ratio:1; width:100%; max-width:480px; margin-inline-start:auto;
+  }
+  .orb svg{width:100%; height:100%; overflow:visible;}
+  .orb-core{
+    position:absolute; inset:32%;
+    border-radius:50%;
+    background: radial-gradient(circle at 30% 30%, var(--blue-bright), var(--blue-deep) 60%, #0a1f4a 100%);
+    box-shadow: 0 0 60px rgba(59,140,255,.5), inset 0 0 40px rgba(255,255,255,.15);
+    display:flex; align-items:center; justify-content:center;
+    animation: float 6s ease-in-out infinite;
+  }
+  @keyframes float{0%,100%{transform:translateY(0);} 50%{transform:translateY(-10px);}}
+  .orb-core .glyph{
+    width:48%; height:48%;
+    filter: drop-shadow(0 0 12px rgba(255,255,255,.8)) brightness(2);
+  }
+
+  .ring{fill:none; stroke:url(#ring-grad); stroke-width:1.2; opacity:.5;}
+  .ring-2{fill:none; stroke:rgba(59,140,255,.25); stroke-width:1; stroke-dasharray:3 6;}
+  .satellite{fill:var(--cyan); filter: drop-shadow(0 0 8px var(--cyan));}
+
+  @keyframes spin{from{transform:rotate(0);} to{transform:rotate(360deg);}}
+  .ring-rot{transform-origin:center; animation: spin 30s linear infinite;}
+  .ring-rot-rev{transform-origin:center; animation: spin 40s linear infinite reverse;}
+
+  /* hero stats strip */
+  .hero-meta{
+    margin-top:80px; display:grid; grid-template-columns: repeat(4, 1fr); gap:1px;
+    background: var(--line); border:1px solid var(--line); border-radius:var(--radius);
+    overflow:hidden;
+  }
+  @media (max-width:700px){.hero-meta{grid-template-columns:repeat(2,1fr);}}
+  .hero-meta .cell{padding:24px 22px; background:var(--bg);}
+  .hero-meta .k{font-family:var(--font-mono); color:var(--muted-2); font-size:11px; letter-spacing:.15em; text-transform:uppercase;}
+  .hero-meta .v{font-family:var(--font-en-head); font-size:26px; margin-top:6px; font-weight:600;}
+  .hero-meta .v .unit{color:var(--blue-bright); font-size:18px; margin-inline-start:2px;}
+
+  /* ============= ABOUT ============= */
+  .about-grid{display:grid; grid-template-columns: 1fr 1fr; gap:48px; align-items:center;}
+  @media (max-width:900px){.about-grid{grid-template-columns:1fr;}}
+  .about-visual{
+    aspect-ratio:1.1; border:1px solid var(--line); border-radius:var(--radius-lg);
+    background:
+      linear-gradient(135deg, rgba(59,140,255,.06), rgba(89,216,255,.02)),
+      var(--surface);
+    position:relative; overflow:hidden;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .about-visual::before{
+    content:""; position:absolute; inset:0;
+    background-image:
+      linear-gradient(rgba(59,140,255,.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(59,140,255,.07) 1px, transparent 1px);
+    background-size:32px 32px;
+    mask-image: radial-gradient(ellipse, #000 40%, transparent 80%);
+  }
+  .about-visual .placeholder{
+    position:relative; z-index:1;
+    font-family:var(--font-mono); font-size:11px; color:var(--muted-2);
+    border:1px dashed var(--line-2); padding:18px 24px; border-radius:8px;
+    background: rgba(13,20,38,.7); backdrop-filter: blur(6px);
+  }
+  .about-visual .corner{
+    position:absolute; width:24px; height:24px; border:1px solid var(--blue);
+  }
+  .about-visual .corner.tl{top:18px; inset-inline-start:18px; border-right:0; border-bottom:0;}
+  .about-visual .corner.tr{top:18px; inset-inline-end:18px; border-left:0; border-bottom:0;}
+  .about-visual .corner.bl{bottom:18px; inset-inline-start:18px; border-right:0; border-top:0;}
+  .about-visual .corner.br{bottom:18px; inset-inline-end:18px; border-left:0; border-top:0;}
+
+  .about-points{margin-top:32px; display:grid; gap:14px;}
+  .about-point{
+    display:flex; gap:14px; align-items:flex-start;
+    padding:14px 18px; border:1px solid var(--line); border-radius:12px;
+    background: var(--surface);
+    transition: all .25s;
+  }
+  .about-point:hover{border-color:var(--blue); background:var(--surface-2); transform:translateX(0);}
+  html[dir="ltr"] .about-point:hover{transform: translateX(4px);}
+  html[dir="rtl"] .about-point:hover{transform: translateX(-4px);}
+  .ap-icon{
+    flex:0 0 36px; width:36px; height:36px; border-radius:8px;
+    background: rgba(59,140,255,.12); border:1px solid rgba(59,140,255,.3);
+    display:grid; place-items:center; color:var(--blue-bright);
+  }
+  .ap-txt{font-size:14.5px;}
+  .ap-txt b{color:var(--ink); font-weight:600;}
+  .ap-txt .desc{color:var(--muted); font-size:13.5px; margin-top:2px;}
+
+  /* ============= SERVICES ============= */
+  .services-grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:18px; margin-top:48px;}
+  @media (max-width:900px){.services-grid{grid-template-columns:1fr 1fr;}}
+  @media (max-width:600px){.services-grid{grid-template-columns:1fr;}}
+  .service{
+    position:relative;
+    padding:28px; border:1px solid var(--line); border-radius:var(--radius);
+    background: linear-gradient(180deg, var(--surface) 0%, var(--bg-2) 100%);
+    overflow:hidden;
+    transition: all .3s;
+  }
+  .service::before{
+    content:""; position:absolute; inset:0;
+    background: radial-gradient(400px circle at var(--mx,50%) var(--my,0%), rgba(59,140,255,.12), transparent 40%);
+    opacity:0; transition: opacity .3s; pointer-events:none;
+  }
+  .service:hover{border-color: var(--blue-deep); transform: translateY(-3px); box-shadow: 0 12px 40px -10px rgba(59,140,255,.3);}
+  .service:hover::before{opacity:1;}
+  .service .num{
+    font-family:var(--font-mono); font-size:11px; color:var(--blue-bright);
+    letter-spacing:.15em;
+  }
+  .service .icon{
+    width:48px; height:48px; border-radius:10px;
+    background: linear-gradient(135deg, rgba(59,140,255,.2), rgba(59,140,255,.05));
+    border:1px solid rgba(59,140,255,.3);
+    display:grid; place-items:center; color:var(--blue-bright);
+    margin: 18px 0 18px;
+    box-shadow: inset 0 0 12px rgba(59,140,255,.15);
+  }
+  .service h3{font-size:20px; margin:0 0 10px; font-weight:600;}
+  .service p{color:var(--muted); font-size:14px; margin:0 0 18px;}
+  .service ul{list-style:none; padding:0; margin:0; display:grid; gap:6px;}
+  .service li{
+    font-family:var(--font-mono); font-size:11.5px; color:var(--muted);
+    display:flex; align-items:center; gap:8px;
+  }
+  html[data-lang="ar"] .service li{font-family:var(--font-ar); font-size:13px;}
+  .service li::before{content:""; width:4px; height:4px; background:var(--blue); border-radius:50%; flex:0 0 4px;}
+
+  /* ============= WHY US ============= */
+  .why-list{display:grid; grid-template-columns:repeat(2,1fr); gap:18px; margin-top:48px;}
+  @media (max-width:800px){.why-list{grid-template-columns:1fr;}}
+  .why-item{
+    padding:26px; border:1px solid var(--line); border-radius:var(--radius);
+    background: var(--surface);
+    display:flex; gap:20px; align-items:flex-start;
+    position:relative;
+  }
+  .why-item .num-big{
+    font-family:var(--font-en-head); font-size:42px; line-height:1; color:transparent;
+    -webkit-text-stroke:1px var(--blue);
+    flex:0 0 auto; min-width:60px;
+  }
+  .why-item h3{font-size:18px; margin:0 0 8px; font-weight:600;}
+  .why-item p{color:var(--muted); font-size:14px; margin:0;}
+
+  /* ============= VALUES ============= */
+  .values-grid{display:grid; grid-template-columns:repeat(5,1fr); gap:1px; margin-top:48px;
+    background:var(--line); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden;}
+  @media (max-width:900px){.values-grid{grid-template-columns:repeat(2,1fr);}}
+  .value{
+    background:var(--surface); padding:32px 24px;
+    transition: background .3s; position:relative;
+  }
+  .value:hover{background:var(--surface-2);}
+  .value .icon{color:var(--blue-bright); margin-bottom:18px;}
+  .value h3{font-size:17px; margin:0 0 8px; font-weight:600;}
+  .value p{color:var(--muted); font-size:13px; margin:0;}
+
+  /* ============= PROCESS ============= */
+  .process-rail{
+    margin-top:60px;
+    display:grid; grid-template-columns:repeat(4, 1fr); gap:0;
+    position:relative;
+  }
+  @media (max-width:900px){.process-rail{grid-template-columns:1fr;}}
+  .process-rail::before{
+    content:""; position:absolute; top:36px; inset-inline-start:36px; inset-inline-end:36px;
+    height:1px;
+    background: linear-gradient(90deg, transparent, var(--blue), var(--blue), transparent);
+    opacity:.5;
+  }
+  @media (max-width:900px){.process-rail::before{display:none;}}
+  .step{padding:0 18px; text-align:center; position:relative;}
+  .step .node{
+    width:72px; height:72px; border-radius:50%;
+    background:var(--bg);
+    border:1px solid var(--blue); 
+    display:grid; place-items:center; margin:0 auto 20px;
+    position:relative; z-index:1;
+    box-shadow: 0 0 24px rgba(59,140,255,.25), inset 0 0 16px rgba(59,140,255,.1);
+  }
+  .step .node .n{
+    font-family:var(--font-en-head); font-size:22px; font-weight:600;
+    background: linear-gradient(180deg, var(--blue-bright), var(--blue));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .step h3{font-size:16px; margin:0 0 8px; font-weight:600;}
+  .step p{color:var(--muted); font-size:13.5px; margin:0;}
+
+  /* ============= INDUSTRIES ============= */
+  .industries-grid{display:grid; grid-template-columns:repeat(6, 1fr); gap:1px;
+    background:var(--line); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden;
+    margin-top:48px;}
+  @media (max-width:900px){.industries-grid{grid-template-columns:repeat(3,1fr);}}
+  @media (max-width:500px){.industries-grid{grid-template-columns:repeat(2,1fr);}}
+  .industry{
+    background:var(--surface); padding:32px 18px; text-align:center;
+    transition: all .25s; cursor:default;
+  }
+  .industry:hover{background:var(--surface-2);}
+  .industry .ic{color:var(--blue-bright); margin:0 auto 14px; display:block;}
+  .industry .lbl{font-size:13.5px; color:var(--ink); font-weight:500;}
+
+  /* ============= MISSION / VISION ============= */
+  .mv-grid{display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:48px;}
+  @media (max-width:800px){.mv-grid{grid-template-columns:1fr;}}
+  .mv-card{
+    position:relative; padding:36px;
+    border:1px solid var(--line); border-radius:var(--radius-lg);
+    background: linear-gradient(135deg, var(--surface), var(--bg-2));
+    overflow:hidden;
+  }
+  .mv-card::before{
+    content:""; position:absolute; top:-40%; inset-inline-end:-30%; width:300px; height:300px; border-radius:50%;
+    background: radial-gradient(circle, rgba(59,140,255,.2), transparent 70%);
+    filter:blur(20px);
+  }
+  .mv-card .tag{
+    font-family:var(--font-mono); font-size:11px; letter-spacing:.2em; color:var(--blue-bright);
+    text-transform:uppercase;
+  }
+  .mv-card h3{font-size:30px; margin:10px 0 16px; font-weight:600;}
+  .mv-card p{font-size:17px; color:var(--ink); margin:0; max-width:480px;}
+  .mv-card .ic{margin-top:24px; color:var(--blue);}
+
+  /* ============= CONTACT ============= */
+  .contact-grid{display:grid; grid-template-columns:1fr 1fr; gap:60px; margin-top:48px;}
+  @media (max-width:900px){.contact-grid{grid-template-columns:1fr;}}
+  .contact-info p{color:var(--muted); font-size:16px;}
+  .contact-list{margin-top:32px; display:grid; gap:14px;}
+  .ci-row{display:flex; gap:14px; align-items:center; padding:14px 18px; border:1px solid var(--line); border-radius:12px; background:var(--surface);}
+  .ci-row .ic{color:var(--blue-bright); flex:0 0 auto;}
+  .ci-row .lbl{font-family:var(--font-mono); font-size:11px; color:var(--muted-2); letter-spacing:.12em;}
+  html[data-lang="ar"] .ci-row .lbl{font-family:var(--font-ar);}
+  .ci-row .val{font-size:14.5px; color:var(--ink); margin-top:2px;}
+
+  form.contact{
+    padding:32px; border:1px solid var(--line); border-radius:var(--radius-lg);
+    background: linear-gradient(180deg, var(--surface), var(--bg-2));
+  }
+  .field{display:flex; flex-direction:column; gap:6px; margin-bottom:16px;}
+  .field label{font-family:var(--font-mono); font-size:11px; color:var(--muted-2); letter-spacing:.12em; text-transform:uppercase;}
+  html[data-lang="ar"] .field label{font-family:var(--font-ar); letter-spacing:0; text-transform:none; font-size:12.5px;}
+  .field input, .field textarea, .field select{
+    background:var(--bg); border:1px solid var(--line-2); border-radius:10px;
+    padding:12px 14px; color:var(--ink); font: inherit; font-size:14.5px;
+    outline:none; transition: border .2s, box-shadow .2s;
+  }
+  .field input:focus, .field textarea:focus, .field select:focus{
+    border-color:var(--blue); box-shadow: 0 0 0 3px rgba(59,140,255,.18);
+  }
+  .field textarea{min-height:120px; resize:vertical;}
+  .row2{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+  @media (max-width:500px){.row2{grid-template-columns:1fr;}}
+
+  /* ============= FOOTER ============= */
+  footer.site{
+    border-top:1px solid var(--line); margin-top:80px;
+    padding: 50px 0 30px;
+    background: linear-gradient(to bottom, transparent, rgba(13,20,38,.5));
+  }
+  .foot{
+    max-width:var(--maxw); margin:0 auto; padding:0 28px;
+    display:flex; justify-content:space-between; align-items:flex-end; gap:24px; flex-wrap:wrap;
+  }
+  .foot .legal{color:var(--muted-2); font-size:12.5px; font-family:var(--font-mono);}
+  html[data-lang="ar"] .foot .legal{font-family:var(--font-ar);}
+  .socials{display:flex; gap:10px;}
+  .socials a{
+    width:38px; height:38px; border-radius:50%;
+    background: var(--surface); border:1px solid var(--line);
+    display:grid; place-items:center; color:var(--muted);
+    transition: all .2s;
+  }
+  .socials a:hover{color:var(--blue-bright); border-color:var(--blue); box-shadow:var(--glow-soft);}
+
+  /* ============= SCROLL ANIMATIONS ============= */
+  .reveal{opacity:0; transform: translateY(24px); transition: opacity .8s ease, transform .8s ease;}
+  .reveal.in{opacity:1; transform:translateY(0);}
+  .reveal.d1{transition-delay:.1s;}
+  .reveal.d2{transition-delay:.2s;}
+  .reveal.d3{transition-delay:.3s;}
+
+  /* divider sigil */
+  .sigil{
+    text-align:center; font-family:var(--font-mono); font-size:11px; color:var(--muted-2);
+    letter-spacing:.3em; margin:0 auto;
+    display:flex; align-items:center; gap:16px; justify-content:center;
+  }
+  .sigil::before, .sigil::after{
+    content:""; height:1px; flex:1; max-width:120px;
+    background: linear-gradient(90deg, transparent, var(--line-2), transparent);
+  }
+</style>
+</head>
+<body>
+<div class="backdrop"></div>
+
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <linearGradient id="ring-grad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#59d8ff"/>
+      <stop offset="50%" stop-color="#3b8cff"/>
+      <stop offset="100%" stop-color="#1d5bd6"/>
+    </linearGradient>
+    <linearGradient id="ic-grad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#59d8ff"/>
+      <stop offset="100%" stop-color="#3b8cff"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<header class="site">
+  <div class="nav">
+    <a class="brand" href="#top">
+      <img src="assets/mtr-logo.png" alt="MTR" />
+      <div class="brand-text">
+        <span class="mono">MTR</span>
+        <span class="name" data-en>Majan for Technical Revolution</span>
+        <span class="name" data-ar>مجان للثورة التقنية</span>
+      </div>
+    </a>
+    <nav class="links">
+      <a href="#about"><span data-en>About</span><span data-ar>من نحن</span></a>
+      <a href="#services"><span data-en>Services</span><span data-ar>الخدمات</span></a>
+      <a href="#why"><span data-en>Why MTR</span><span data-ar>لماذا نحن</span></a>
+      <a href="#process"><span data-en>Process</span><span data-ar>آلية العمل</span></a>
+      <a href="#industries"><span data-en>Industries</span><span data-ar>القطاعات</span></a>
+      <a href="#contact"><span data-en>Contact</span><span data-ar>تواصل</span></a>
+    </nav>
+    <div class="nav-actions">
+      <div class="lang-toggle" role="group" aria-label="Language">
+        <button data-lang-btn="en" class="active">EN</button>
+        <button data-lang-btn="ar">ع</button>
+      </div>
+      <a href="#contact" class="btn primary">
+        <span data-en>Get a quote</span>
+        <span data-ar>اطلب عرض سعر</span>
+        <svg class="arr" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+</header>
+
+<a id="top"></a>
+<main>
+
+  <!-- ==================== HERO ==================== -->
+  <section class="hero">
+    <div class="hero-grid">
+      <div>
+        <span class="eyebrow reveal">
+          <span data-en>Technology · Innovation · Trust</span>
+          <span data-ar>التقنية · الابتكار · الثقة</span>
+        </span>
+        <h1 class="reveal d1">
+          <span data-en>Smart technology<br/>for a <span class="accent">scalable future.</span></span>
+          <span data-ar>تقنية ذكية<br/>لمستقبل <span class="accent">قابل للتوسّع.</span></span>
+        </h1>
+        <p class="lede reveal d2">
+          <span data-en>MTR partners with organizations to deliver cloud, networking, and smart-management solutions engineered for performance, security, and growth.</span>
+          <span data-ar>تعمل MTR مع المؤسسات لتقديم حلول السحابة والشبكات والإدارة الذكية المصمّمة لتحقيق الأداء العالي والأمان والنمو المستدام.</span>
+        </p>
+        <div class="hero-ctas reveal d3">
+          <a href="#services" class="btn primary">
+            <span data-en>Explore services</span>
+            <span data-ar>استعرض الخدمات</span>
+            <svg class="arr" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+          <a href="#contact" class="btn">
+            <span data-en>Free consultation</span>
+            <span data-ar>استشارة مجانية</span>
+          </a>
+        </div>
+      </div>
+      <div class="reveal d2">
+        <div class="orb">
+          <svg viewBox="-100 -100 200 200">
+            <g class="ring-rot">
+              <circle class="ring" r="92"/>
+              <circle class="satellite" cx="92" cy="0" r="3"/>
+              <circle class="satellite" cx="-65" cy="-65" r="2"/>
+            </g>
+            <g class="ring-rot-rev">
+              <circle class="ring-2" r="76"/>
+              <circle class="satellite" cx="-76" cy="0" r="2.5"/>
+            </g>
+            <g class="ring-rot">
+              <circle class="ring" r="60" opacity=".3"/>
+              <circle class="satellite" cx="0" cy="-60" r="2"/>
+              <circle class="satellite" cx="42" cy="42" r="1.5"/>
+            </g>
+          </svg>
+          <div class="orb-core">
+            <svg class="glyph" viewBox="0 0 100 100" fill="none">
+              <path d="M20 75 V25 L35 60 L50 25 V75 M65 25 V75 M65 25 H80 M65 50 H78" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-meta reveal">
+      <div class="cell">
+        <div class="k" data-en>Uptime SLA</div>
+        <div class="k" data-ar>ضمان التشغيل</div>
+        <div class="v">99.9<span class="unit">%</span></div>
+      </div>
+      <div class="cell">
+        <div class="k" data-en>Support window</div>
+        <div class="k" data-ar>الدعم الفني</div>
+        <div class="v">24/7</div>
+      </div>
+      <div class="cell">
+        <div class="k" data-en>Core services</div>
+        <div class="k" data-ar>الخدمات الأساسية</div>
+        <div class="v">6<span class="unit">+</span></div>
+      </div>
+      <div class="cell">
+        <div class="k" data-en>Industries served</div>
+        <div class="k" data-ar>القطاعات</div>
+        <div class="v">10<span class="unit">+</span></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="sigil">// 01 — <span data-en>WHO WE ARE</span><span data-ar>من نحن</span></div>
+
+  <!-- ==================== ABOUT ==================== -->
+  <section id="about">
+    <div class="about-grid">
+      <div class="reveal">
+        <span class="eyebrow">
+          <span data-en>About MTR</span>
+          <span data-ar>عن مجان</span>
+        </span>
+        <h2 data-en>A trusted partner in digital transformation.</h2>
+        <h2 data-ar>شريكك الموثوق في التحوّل الرقمي.</h2>
+        <p class="lede" data-en>Majan Technical Revolution is a pioneering force in IT — committed to delivering innovative, customer-centric solutions that drive operational excellence and digital advancement across industries.</p>
+        <p class="lede" data-ar>مجان للثورة التقنية شركة رائدة في قطاع تقنية المعلومات، ملتزمة بتقديم حلول مبتكرة تتمحور حول العميل لتحقيق التميّز التشغيلي والتقدم الرقمي عبر مختلف القطاعات.</p>
+
+        <div class="about-points">
+          <div class="about-point">
+            <div class="ap-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L4 7v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V7l-8-5z"/></svg></div>
+            <div class="ap-txt">
+              <b data-en>Reliable by design</b><b data-ar>موثوقية بالتصميم</b>
+              <div class="desc" data-en>Quality, security and customer satisfaction are wired into every engagement.</div>
+              <div class="desc" data-ar>الجودة والأمان ورضا العميل في صميم كل مشروع نقدمه.</div>
+            </div>
+          </div>
+          <div class="about-point">
+            <div class="ap-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 010 18M12 3a14 14 0 000 18"/></svg></div>
+            <div class="ap-txt">
+              <b data-en>Industry-wide expertise</b><b data-ar>خبرة قطاعية واسعة</b>
+              <div class="desc" data-en>From education and finance to healthcare — proven across sectors.</div>
+              <div class="desc" data-ar>من التعليم والمالية إلى الصحة — حلول مثبتة في قطاعات متعددة.</div>
+            </div>
+          </div>
+          <div class="about-point">
+            <div class="ap-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 18l6-6 4 4 8-8M14 8h6v6"/></svg></div>
+            <div class="ap-txt">
+              <b data-en>Built to scale</b><b data-ar>قابلية للتوسع</b>
+              <div class="desc" data-en>Architectures that grow with your business — without compromise.</div>
+              <div class="desc" data-ar>أنظمة تنمو مع أعمالك دون أي تنازل عن الأداء.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal d2">
+        <div class="about-visual">
+          <span class="corner tl"></span><span class="corner tr"></span>
+          <span class="corner bl"></span><span class="corner br"></span>
+          <div class="placeholder">
+            <div>// PLACEHOLDER</div>
+            <div data-en style="margin-top:6px; color:#cfd8ee">Team / office photo</div>
+            <div data-ar style="margin-top:6px; color:#cfd8ee">صورة الفريق / المكتب</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="sigil">// 02 — <span data-en>WHAT WE DO</span><span data-ar>ماذا نقدم</span></div>
+
+  <!-- ==================== SERVICES ==================== -->
+  <section id="services">
+    <div class="reveal">
+      <span class="eyebrow"><span data-en>Our Services</span><span data-ar>خدماتنا</span></span>
+      <h2 data-en>Comprehensive IT, end to end.</h2>
+      <h2 data-ar>حلول تقنية شاملة من البداية للنهاية.</h2>
+      <p class="lede" data-en>From consultation and design to deployment and 24/7 support — our specialists cover the full lifecycle of your IT environment.</p>
+      <p class="lede" data-ar>من الاستشارة والتصميم وحتى التطبيق والدعم على مدار الساعة — يغطّي فريقنا دورة حياة بنيتك التقنية بالكامل.</p>
+    </div>
+
+    <div class="services-grid">
+      <!-- Azure -->
+      <article class="service reveal">
+        <div class="num">01 / Azure</div>
+        <div class="icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 16a4 4 0 014-4 5 5 0 019.6-2A4 4 0 0119 18H7a4 4 0 01-4-2z"/></svg></div>
+        <h3 data-en>Azure Server Management</h3>
+        <h3 data-ar>إدارة خوادم Azure</h3>
+        <p data-en>Full lifecycle management of Microsoft Azure cloud servers — secure, optimized, and always on.</p>
+        <p data-ar>إدارة كاملة لخوادم Microsoft Azure السحابية — آمنة وموثوقة وعالية الأداء.</p>
+        <ul>
+          <li><span data-en>Setup & optimization</span><span data-ar>الإعداد والتحسين</span></li>
+          <li><span data-en>Performance monitoring</span><span data-ar>مراقبة الأداء</span></li>
+          <li><span data-en>Load balancing & autoscaling</span><span data-ar>توزيع الأحمال والتوسّع التلقائي</span></li>
+        </ul>
+      </article>
+
+      <!-- LMS -->
+      <article class="service reveal d1">
+        <div class="num">02 / LMS</div>
+        <div class="icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6l9-4 9 4-9 4-9-4zM21 10v6M3 8v6c0 2 4 4 9 4s9-2 9-4"/></svg></div>
+        <h3 data-en>Learning Management System</h3>
+        <h3 data-ar>أنظمة إدارة التعلّم</h3>
+        <p data-en>Moodle & Blackboard deployment, theming, course management, and integrations.</p>
+        <p data-ar>نشر وتخصيص منصات Moodle و Blackboard، وإدارة المقررات والتكاملات.</p>
+        <ul>
+          <li><span data-en>Full-cycle deployment</span><span data-ar>نشر متكامل</span></li>
+          <li><span data-en>Custom theming & branding</span><span data-ar>تصميم وهوية مخصصة</span></li>
+          <li><span data-en>Training & integrations</span><span data-ar>التدريب والتكاملات</span></li>
+        </ul>
+      </article>
+
+      <!-- Networking -->
+      <article class="service reveal d2">
+        <div class="num">03 / Network</div>
+        <div class="icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="6" cy="6" r="2"/><circle cx="18" cy="6" r="2"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/><circle cx="12" cy="12" r="2.5"/><path d="M7.5 7.5l3 3M16.5 7.5l-3 3M7.5 16.5l3-3M16.5 16.5l-3-3"/></svg></div>
+        <h3 data-en>Networking Solutions</h3>
+        <h3 data-ar>حلول الشبكات</h3>
+        <p data-en>Secure, reliable networks: LAN, WAN, VPN, wireless, and firewall — designed and maintained.</p>
+        <p data-ar>شبكات آمنة وموثوقة: LAN و WAN و VPN، شبكات لاسلكية وجدران حماية — تصميم وصيانة.</p>
+        <ul>
+          <li><span data-en>LAN / WAN / VPN setup</span><span data-ar>إعداد LAN / WAN / VPN</span></li>
+          <li><span data-en>Wireless design</span><span data-ar>تصميم الشبكات اللاسلكية</span></li>
+          <li><span data-en>24/7 monitoring</span><span data-ar>مراقبة على مدار الساعة</span></li>
+        </ul>
+      </article>
+
+      <!-- Cloud -->
+      <article class="service reveal">
+        <div class="num">04 / Cloud</div>
+        <div class="icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 18a5 5 0 010-10 6 6 0 0111.5 1.5A4.5 4.5 0 0117 18H7z"/><path d="M12 11v6M9 14l3 3 3-3"/></svg></div>
+        <h3 data-en>Cloud Computing</h3>
+        <h3 data-ar>الحوسبة السحابية</h3>
+        <p data-en>Azure & AWS integration, multi-cloud strategy, secure data migration and hybrid solutions.</p>
+        <p data-ar>تكامل مع Azure و AWS، استراتيجيات متعددة السحابة، وترحيل البيانات الآمن.</p>
+        <ul>
+          <li><span data-en>Cloud readiness & migration</span><span data-ar>الجاهزية والترحيل</span></li>
+          <li><span data-en>Multi-cloud strategy</span><span data-ar>استراتيجية متعددة السحابة</span></li>
+          <li><span data-en>Hybrid & security</span><span data-ar>الحلول الهجينة والأمان</span></li>
+        </ul>
+      </article>
+
+      <!-- Smart -->
+      <article class="service reveal d1">
+        <div class="num">05 / Smart</div>
+        <div class="icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18M8 4V2M16 4V2M12 13v-2M9 13h6"/></svg></div>
+        <h3 data-en>Smart Management</h3>
+        <h3 data-ar>الإدارة الذكية</h3>
+        <p data-en>IoT dashboards, automation, smart office and real-time analytics with mobile control.</p>
+        <p data-ar>لوحات IoT، أتمتة، حلول مكتب ذكي وتحليلات لحظية مع تحكّم عبر الجوال.</p>
+        <ul>
+          <li><span data-en>IoT monitoring & dashboards</span><span data-ar>مراقبة IoT ولوحات تحكم</span></li>
+          <li><span data-en>Process automation</span><span data-ar>أتمتة العمليات</span></li>
+          <li><span data-en>Real-time analytics</span><span data-ar>تحليلات لحظية</span></li>
+        </ul>
+      </article>
+
+      <!-- IT Infra -->
+      <article class="service reveal d2">
+        <div class="num">06 / Infra</div>
+        <div class="icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="6" rx="1"/><rect x="3" y="15" width="18" height="6" rx="1"/><path d="M7 6h.01M7 18h.01M11 6h6M11 18h6"/></svg></div>
+        <h3 data-en>IT Infrastructure</h3>
+        <h3 data-ar>البنية التحتية لتقنية المعلومات</h3>
+        <p data-en>Servers, workstations, printers, and networks — built, maintained, and supported.</p>
+        <p data-ar>خوادم ومحطات عمل وطابعات وشبكات — بناء وصيانة ودعم متكامل.</p>
+        <ul>
+          <li><span data-en>End-to-end setup</span><span data-ar>إعداد متكامل</span></li>
+          <li><span data-en>Backup & disaster recovery</span><span data-ar>النسخ الاحتياطي والتعافي</span></li>
+          <li><span data-en>Cybersecurity assessments</span><span data-ar>تقييمات الأمن السيبراني</span></li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <div class="sigil">// 03 — <span data-en>WHY MTR</span><span data-ar>لماذا نحن</span></div>
+
+  <!-- ==================== WHY US ==================== -->
+  <section id="why">
+    <div class="reveal">
+      <span class="eyebrow"><span data-en>Why choose MTR</span><span data-ar>لماذا تختار MTR</span></span>
+      <h2 data-en>We don't sell services. We build partnerships.</h2>
+      <h2 data-ar>لا نقدم خدمات فقط — نبني شراكات.</h2>
+      <p class="lede" data-en>A team of engineers, developers, and IT consultants focused on outcomes that compound over time.</p>
+      <p class="lede" data-ar>فريق من المهندسين والمطورين والمستشارين يركّز على نتائج تتراكم قيمتها مع الوقت.</p>
+    </div>
+    <div class="why-list">
+      <div class="why-item reveal">
+        <div class="num-big">01</div>
+        <div>
+          <h3 data-en>Experience & expertise</h3>
+          <h3 data-ar>خبرة وكفاءة</h3>
+          <p data-en>Delivered across education, finance, healthcare, and more.</p>
+          <p data-ar>تجارب ناجحة في التعليم والمالية والصحة وقطاعات أخرى.</p>
+        </div>
+      </div>
+      <div class="why-item reveal d1">
+        <div class="num-big">02</div>
+        <div>
+          <h3 data-en>End-to-end service</h3>
+          <h3 data-ar>خدمة متكاملة</h3>
+          <p data-en>From idea to implementation — with continuous support after launch.</p>
+          <p data-ar>من الفكرة إلى التطبيق مع دعم متواصل بعد الإطلاق.</p>
+        </div>
+      </div>
+      <div class="why-item reveal">
+        <div class="num-big">03</div>
+        <div>
+          <h3 data-en>Tailored solutions</h3>
+          <h3 data-ar>حلول مخصصة</h3>
+          <p data-en>Customized for your business size, industry, and goals — never one-size-fits-all.</p>
+          <p data-ar>مصمّمة بدقة لتناسب حجم عملك وقطاعك وأهدافك.</p>
+        </div>
+      </div>
+      <div class="why-item reveal d1">
+        <div class="num-big">04</div>
+        <div>
+          <h3 data-en>24/7 support</h3>
+          <h3 data-ar>دعم على مدار الساعة</h3>
+          <p data-en>Fast resolution, minimal disruption — anytime, anywhere.</p>
+          <p data-ar>استجابة سريعة وتأثير محدود — في أي وقت ومن أي مكان.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="sigil">// 04 — <span data-en>OUR VALUES</span><span data-ar>قيمنا</span></div>
+
+  <!-- ==================== VALUES ==================== -->
+  <section id="values">
+    <div class="reveal">
+      <span class="eyebrow"><span data-en>Our Values</span><span data-ar>قيمنا</span></span>
+      <h2 data-en>Principles that guide every decision.</h2>
+      <h2 data-ar>مبادئ تقود كل قرار نتخذه.</h2>
+    </div>
+    <div class="values-grid reveal">
+      <div class="value">
+        <div class="icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 2l1.8 5.6h5.9l-4.8 3.5 1.8 5.6L12 13.2 7.3 16.7 9.1 11l-4.8-3.5h5.9z"/></svg></div>
+        <h3 data-en>Innovation</h3><h3 data-ar>الابتكار</h3>
+        <p data-en>Smarter, more efficient solutions — always.</p>
+        <p data-ar>حلول أذكى وأكثر كفاءة — دائماً.</p>
+      </div>
+      <div class="value">
+        <div class="icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 2L4 7v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V7l-8-5z"/><path d="M9 12l2 2 4-4"/></svg></div>
+        <h3 data-en>Integrity</h3><h3 data-ar>النزاهة</h3>
+        <p data-en>Trust through honesty, transparency, responsibility.</p>
+        <p data-ar>ثقة مبنية على الصدق والشفافية والمسؤولية.</p>
+      </div>
+      <div class="value">
+        <div class="icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="8" r="3.5"/><path d="M5 21a7 7 0 0114 0"/></svg></div>
+        <h3 data-en>Customer focus</h3><h3 data-ar>التركيز على العميل</h3>
+        <p data-en>Your success sits at the heart of everything.</p>
+        <p data-ar>نجاحك في قلب كل ما نقوم به.</p>
+      </div>
+      <div class="value">
+        <div class="icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 12l5 5L20 6"/></svg></div>
+        <h3 data-en>Quality</h3><h3 data-ar>الجودة</h3>
+        <p data-en>Services that meet the highest standards.</p>
+        <p data-ar>خدمات تلبي أعلى المعايير.</p>
+      </div>
+      <div class="value">
+        <div class="icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 12a9 9 0 1116 5.7M21 12a9 9 0 01-16-5.7"/><path d="M21 4v5h-5M3 20v-5h5"/></svg></div>
+        <h3 data-en>Continuous improvement</h3><h3 data-ar>التحسين المستمر</h3>
+        <p data-en>Learning, evolving, growing with technology.</p>
+        <p data-ar>نتعلم ونتطور وننمو مع التقنية.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="sigil">// 05 — <span data-en>HOW WE WORK</span><span data-ar>كيف نعمل</span></div>
+
+  <!-- ==================== PROCESS ==================== -->
+  <section id="process">
+    <div class="reveal">
+      <span class="eyebrow"><span data-en>Our process</span><span data-ar>آلية العمل</span></span>
+      <h2 data-en>From discovery to long-term partnership.</h2>
+      <h2 data-ar>من الاستكشاف إلى الشراكة طويلة الأمد.</h2>
+    </div>
+    <div class="process-rail">
+      <div class="step reveal">
+        <div class="node"><div class="n">01</div></div>
+        <h3 data-en>Discover</h3><h3 data-ar>استكشاف</h3>
+        <p data-en>We listen, audit, and map your current environment and goals.</p>
+        <p data-ar>نستمع لاحتياجاتك ونحلّل بيئتك التقنية وأهدافك.</p>
+      </div>
+      <div class="step reveal d1">
+        <div class="node"><div class="n">02</div></div>
+        <h3 data-en>Design</h3><h3 data-ar>تصميم</h3>
+        <p data-en>Architect a scalable solution tailored to your business.</p>
+        <p data-ar>نصمّم حلولاً قابلة للتوسع تتلاءم مع أعمالك.</p>
+      </div>
+      <div class="step reveal d2">
+        <div class="node"><div class="n">03</div></div>
+        <h3 data-en>Deploy</h3><h3 data-ar>تنفيذ</h3>
+        <p data-en>Implement with care — minimal downtime, tested every step.</p>
+        <p data-ar>تنفيذ احترافي مع أقل توقّف ممكن واختبار شامل.</p>
+      </div>
+      <div class="step reveal d3">
+        <div class="node"><div class="n">04</div></div>
+        <h3 data-en>Support</h3><h3 data-ar>دعم</h3>
+        <p data-en>Continuous monitoring, optimization, and 24/7 response.</p>
+        <p data-ar>مراقبة وتحسين مستمر مع دعم على مدار الساعة.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="sigil">// 06 — <span data-en>INDUSTRIES</span><span data-ar>القطاعات</span></div>
+
+  <!-- ==================== INDUSTRIES ==================== -->
+  <section id="industries">
+    <div class="reveal">
+      <span class="eyebrow"><span data-en>Industries we serve</span><span data-ar>القطاعات التي نخدمها</span></span>
+      <h2 data-en>Proven across sectors.</h2>
+      <h2 data-ar>خبرة موثّقة عبر القطاعات.</h2>
+    </div>
+    <div class="industries-grid reveal">
+      <div class="industry">
+        <svg class="ic" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 10l9-6 9 6v10H3z"/><path d="M9 20v-6h6v6"/></svg>
+        <div class="lbl" data-en>Education</div><div class="lbl" data-ar>التعليم</div>
+      </div>
+      <div class="industry">
+        <svg class="ic" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="6" width="18" height="14" rx="1"/><path d="M3 10h18M7 14h2M7 17h6"/></svg>
+        <div class="lbl" data-en>Finance</div><div class="lbl" data-ar>المالية</div>
+      </div>
+      <div class="industry">
+        <svg class="ic" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 21s-7-4.5-7-10a4 4 0 017-2.5A4 4 0 0119 11c0 5.5-7 10-7 10z"/></svg>
+        <div class="lbl" data-en>Healthcare</div><div class="lbl" data-ar>الصحة</div>
+      </div>
+      <div class="industry">
+        <svg class="ic" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 21V8l4-4h10l4 4v13"/><path d="M3 21h18M9 14h6M9 17h6"/></svg>
+        <div class="lbl" data-en>Government</div><div class="lbl" data-ar>الحكومي</div>
+      </div>
+      <div class="industry">
+        <svg class="ic" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="7" width="18" height="13" rx="1"/><path d="M8 7V4h8v3"/></svg>
+        <div class="lbl" data-en>Retail</div><div class="lbl" data-ar>التجزئة</div>
+      </div>
+      <div class="industry">
+        <svg class="ic" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/><path d="M3 8h11l3 5h4v4M3 8v9h2"/></svg>
+        <div class="lbl" data-en>Logistics</div><div class="lbl" data-ar>اللوجستيات</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="sigil">// 07 — <span data-en>OUR PURPOSE</span><span data-ar>غايتنا</span></div>
+
+  <!-- ==================== MISSION + VISION ==================== -->
+  <section id="mv">
+    <div class="mv-grid">
+      <div class="mv-card reveal">
+        <span class="tag" data-en>Our Mission</span><span class="tag" data-ar>رسالتنا</span>
+        <h3 data-en>Deliver technology that drives success.</h3>
+        <h3 data-ar>تقديم تقنية تصنع النجاح.</h3>
+        <p data-en>To deliver cutting-edge technology solutions that optimize operations and create sustainable growth for our clients.</p>
+        <p data-ar>تقديم حلول تقنية متطوّرة تحسّن العمليات وتصنع نمواً مستداماً لعملائنا.</p>
+        <svg class="ic" width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/></svg>
+      </div>
+      <div class="mv-card reveal d1">
+        <span class="tag" data-en>Our Vision</span><span class="tag" data-ar>رؤيتنا</span>
+        <h3 data-en>A global leader in IT services.</h3>
+        <h3 data-ar>الريادة العالمية في خدمات تقنية المعلومات.</h3>
+        <p data-en>To be a leading global provider of innovative IT services — known for excellence, reliability, and customer-first thinking.</p>
+        <p data-ar>أن نكون مزوّداً عالمياً رائداً لخدمات تقنية المعلومات — يُعرف بالتميّز والموثوقية ومحورية العميل.</p>
+        <svg class="ic" width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+      </div>
+    </div>
+  </section>
+
+  <div class="sigil">// 08 — <span data-en>GET IN TOUCH</span><span data-ar>تواصل معنا</span></div>
+
+  <!-- ==================== CONTACT ==================== -->
+  <section id="contact">
+    <div class="contact-grid">
+      <div class="contact-info reveal">
+        <span class="eyebrow"><span data-en>Contact</span><span data-ar>تواصل</span></span>
+        <h2 data-en>Ready to take your IT to the next level?</h2>
+        <h2 data-ar>هل أنت جاهز للارتقاء بتقنياتك إلى المستوى التالي؟</h2>
+        <p class="lede" data-en>Tell us about your project. Our team will get back within one business day with a tailored plan and free consultation.</p>
+        <p class="lede" data-ar>أخبرنا عن مشروعك، وسيتواصل فريقنا خلال يوم عمل واحد بخطة مخصصة واستشارة مجانية.</p>
+
+        <div class="contact-list">
+          <div class="ci-row">
+            <svg class="ic" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+            <div>
+              <div class="lbl" data-en>Email</div><div class="lbl" data-ar>البريد الإلكتروني</div>
+              <div class="val">info@mtr.digital</div>
+            </div>
+          </div>
+          <div class="ci-row">
+            <svg class="ic" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6A19.8 19.8 0 012.1 4.2 2 2 0 014.1 2h3a2 2 0 012 1.7c.1.9.3 1.8.6 2.6a2 2 0 01-.5 2.1L8 9.6a16 16 0 006 6l1.2-1.2a2 2 0 012.1-.5c.8.3 1.7.5 2.6.6a2 2 0 011.7 2z"/></svg>
+            <div>
+              <div class="lbl" data-en>Phone</div><div class="lbl" data-ar>الهاتف</div>
+              <div class="val" data-en>+xxx · request a callback</div>
+              <div class="val" data-ar>+xxx · اطلب اتصالاً</div>
+            </div>
+          </div>
+          <div class="ci-row">
+            <svg class="ic" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-7-7-12a7 7 0 0114 0c0 5-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>
+            <div>
+              <div class="lbl" data-en>Headquarters</div><div class="lbl" data-ar>المقر الرئيسي</div>
+              <div class="val" data-en>Sultanate of Oman</div>
+              <div class="val" data-ar>سلطنة عُمان</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <form class="contact reveal d1" onsubmit="event.preventDefault(); this.querySelector('.ok').style.display='flex';">
+        <div class="row2">
+          <div class="field">
+            <label data-en>Full name</label><label data-ar>الاسم الكامل</label>
+            <input type="text" required />
+          </div>
+          <div class="field">
+            <label data-en>Company</label><label data-ar>الشركة</label>
+            <input type="text" />
+          </div>
+        </div>
+        <div class="row2">
+          <div class="field">
+            <label data-en>Email</label><label data-ar>البريد الإلكتروني</label>
+            <input type="email" required />
+          </div>
+          <div class="field">
+            <label data-en>Phone</label><label data-ar>الهاتف</label>
+            <input type="tel" />
+          </div>
+        </div>
+        <div class="field">
+          <label data-en>Service of interest</label><label data-ar>الخدمة المطلوبة</label>
+          <select>
+            <option data-en>Azure Server Management</option>
+            <option data-en>Learning Management System</option>
+            <option data-en>Networking Solutions</option>
+            <option data-en>Cloud Computing</option>
+            <option data-en>Smart Management</option>
+            <option data-en>IT Infrastructure</option>
+            <option data-en>Other / Consultation</option>
+          </select>
+        </div>
+        <div class="field">
+          <label data-en>Project details</label><label data-ar>تفاصيل المشروع</label>
+          <textarea placeholder="..." ></textarea>
+        </div>
+        <button type="submit" class="btn primary" style="width:100%; justify-content:center; margin-top:6px;">
+          <span data-en>Send message</span>
+          <span data-ar>إرسال الرسالة</span>
+          <svg class="arr" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </button>
+        <div class="ok" style="display:none; margin-top:14px; padding:12px 14px; border:1px solid rgba(89,216,255,.4); background:rgba(89,216,255,.08); border-radius:10px; color:var(--cyan); font-size:13px; gap:8px; align-items:center;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7"/></svg>
+          <span data-en>Thanks! We'll be in touch shortly.</span>
+          <span data-ar>شكراً لك! سنتواصل معك قريباً.</span>
+        </div>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="site">
+  <div class="foot">
+    <div style="display:flex; align-items:center; gap:14px;">
+      <img src="assets/mtr-logo.png" alt="MTR" style="height:32px;" />
+      <div>
+        <div style="font-family:var(--font-mono); font-size:11px; color:var(--blue-bright); letter-spacing:.18em;">MTR</div>
+        <div style="font-size:13px; color:var(--muted);" data-en>© 2026 Majan for Technical Revolution. All rights reserved.</div>
+        <div style="font-size:13px; color:var(--muted);" data-ar>© 2026 مجان للثورة التقنية. جميع الحقوق محفوظة.</div>
+      </div>
+    </div>
+    <div class="socials">
+      <a href="#" aria-label="LinkedIn"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 11-.02 5.01 2.5 2.5 0 01.02-5zM2 9h6v12H2zM10 9h5.7v1.7h.1c.8-1.4 2.7-2.8 5.5-2.8 5.9 0 7 3.9 7 9V21h-6v-6.5c0-1.6 0-3.6-2.2-3.6s-2.5 1.7-2.5 3.5V21H10z"/></svg></a>
+      <a href="#" aria-label="X"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 2H22l-7.3 8.4L23.4 22h-6.7l-5.3-6.9L5.4 22H2.2l7.9-9L1.6 2h6.8l4.8 6.3L18.9 2z"/></svg></a>
+      <a href="#" aria-label="Email"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ---- Language toggle ----
+  const html = document.documentElement;
+  const btns = document.querySelectorAll('[data-lang-btn]');
+  function setLang(l){
+    html.setAttribute('data-lang', l);
+    html.setAttribute('dir', l === 'ar' ? 'rtl' : 'ltr');
+    html.setAttribute('lang', l);
+    btns.forEach(b => b.classList.toggle('active', b.dataset.langBtn === l));
+    try{ localStorage.setItem('mtr-lang', l); }catch(_){}
+  }
+  btns.forEach(b => b.addEventListener('click', () => setLang(b.dataset.langBtn)));
+  try{
+    const saved = localStorage.getItem('mtr-lang');
+    if(saved) setLang(saved);
+  }catch(_){}
+
+  // ---- Scroll reveal ----
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if(e.isIntersecting){
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // ---- Mouse-follow glow on service cards ----
+  document.querySelectorAll('.service').forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const r = card.getBoundingClientRect();
+      card.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
+      card.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
+    });
+  });
+</script>
+</body>
+</html>
